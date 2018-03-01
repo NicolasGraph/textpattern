@@ -310,7 +310,7 @@ function form_edit($message = '', $refresh_partials = false)
     $skin = $thisSkin->setName($skin)->setEditing();
 
     if ($step == 'form_delete' || empty($name) && $step != 'form_create' && !$savenew) {
-        $name = get_pref('last_form_saved', 'default');
+        $name = $instance->getEditing();
     } elseif ((($copy || $savenew) && $newname) && !$save_error) {
         $name = $newname;
     } elseif ((($newname && ($newname != $name)) || $step === 'form_create') && !$save_error) {

@@ -161,8 +161,6 @@ function css_edit($message = '', $refresh_partials = false)
         'skin',
     ))));
 
-    $default_name = safe_field("css", 'txp_section', "name = 'default'");
-
     $name = Css::sanitize(assert_string(gps('name')));
     $newname = Css::sanitize(assert_string(gps('newname')));
     $skin = ($skin !== '') ? $skin : null;
@@ -171,8 +169,10 @@ function css_edit($message = '', $refresh_partials = false)
     $thisSkin = Txp::get('Textpattern\Skin\Skin');
     $skin = $thisSkin->setName($skin)->setEditing();
 
+    $editing = $instance->getEditing();
+
     if ($step == 'css_delete' || empty($name) && $step != 'pour' && !$savenew) {
-        $name = get_pref('last_css_saved', $default_name);
+        $name = $editing;
     } elseif ((($copy || $savenew) && $newname) && !$save_error) {
         $name = $newname;
     } elseif ((($newname && ($newname != $name)) || $step === 'pour') && !$save_error) {
@@ -217,7 +217,7 @@ function css_edit($message = '', $refresh_partials = false)
     $rs = array(
         'name'    => $name,
         'newname' => $newname,
-        'default' => $default_name,
+        'default' => $editing,
         'skin'    => $skin,
         'css'     => $thecss,
         );

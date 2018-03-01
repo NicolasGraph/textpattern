@@ -307,15 +307,21 @@ namespace Textpattern\Skin {
 
         public function getEditing()
         {
+            global $prefs;
+
             $editing = get_pref('last_'.$this->getEvent().'_saved', '', true);
             $installed = $this->getInstalled()[$this->getSkin()->getName()];
 
             if (!$editing || !in_array($editing, $installed)) {
-                reset($installed);
-                $sliced = array_slice($installed, 0, 1);
-                $editing = array_shift($sliced);
 
-                $this->setEditing($editing);
+                $editing = static::getDefault();
+
+                if (!in_array($editing, $installed)) {
+                    reset($installed);
+
+                    $sliced = array_slice($installed, 0, 1);
+                    $editing = array_shift($sliced);
+                }
             }
 
             return $editing;
@@ -344,7 +350,7 @@ namespace Textpattern\Skin {
 
         protected static function resetEditing()
         {
-            return $this->setEditing(self::getDefault());
+            return $this->setEditing(static::getDefault());
         }
 
         /**

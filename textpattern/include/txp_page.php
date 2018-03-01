@@ -127,8 +127,6 @@ function page_edit($message = '', $refresh_partials = false)
         'skin',
     ))));
 
-    $default_name = safe_field("page", 'txp_section', "name = 'default'");
-
     $name = Page::sanitize(assert_string(gps('name')));
     $newname = Page::sanitize(assert_string(gps('newname')));
     $skin = ($skin !== '') ? $skin : null;
@@ -137,8 +135,10 @@ function page_edit($message = '', $refresh_partials = false)
     $thisSkin = Txp::get('Textpattern\Skin\Skin');
     $skin = $thisSkin->setName($skin)->setEditing();
 
+    $editing = $instance->getEditing();
+
     if ($step == 'page_delete' || empty($name) && $step != 'page_new' && !$savenew) {
-        $name = get_pref('last_page_saved', $default_name);
+        $name = $editing;
     } elseif ((($copy || $savenew) && $newname) && !$save_error) {
         $name = $newname;
     } elseif ((($newname && ($newname != $name)) || $step === 'page_new') && !$save_error) {
@@ -183,7 +183,7 @@ function page_edit($message = '', $refresh_partials = false)
     $rs = array(
         'name'    => $name,
         'newname' => $newname,
-        'default' => $default_name,
+        'default' => $editing,
         'skin'    => $skin,
         'html'    => $html,
         );

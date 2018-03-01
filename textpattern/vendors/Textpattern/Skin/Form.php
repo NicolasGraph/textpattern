@@ -102,5 +102,16 @@ namespace Textpattern\Skin {
         {
             return static::$subdirValues;
         }
+
+        /**
+         * Get the skin name used by the default section.
+         *
+         * @return mixed Skin name or FALSE on error.
+         */
+
+        protected function getDefault()
+        {
+            return 'default';
+        }
     }
 }
