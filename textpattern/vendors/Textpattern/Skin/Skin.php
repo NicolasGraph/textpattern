@@ -457,7 +457,6 @@ namespace Textpattern\Skin {
 
             if ($files) {
                 foreach ($files as $file) {
-                    $filePath = $file->getPath();
                     $name = basename($file->getPath());
 
                     if ($name === self::sanitize($name)) {
