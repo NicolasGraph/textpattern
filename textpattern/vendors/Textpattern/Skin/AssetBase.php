@@ -305,15 +305,17 @@ namespace Textpattern\Skin {
          * {@inheritdoc}
          */
 
-        public function getEditing()
+        public function getEditing($fromDB = false)
         {
             global $prefs;
 
-            $editing = get_pref('last_'.$this->getEvent().'_saved', '', true);
-            $installed = $this->getInstalled()[$this->getSkin()->getName()];
+            $editing = get_pref('last_'.$this->getEvent().'_saved', '', $fromDB);
+
+            if ($editing) {
+                $installed = $this->getInstalled()[$this->getSkin()->getName()];
+            }
 
             if (!$editing || !in_array($editing, $installed)) {
-
                 $editing = static::getDefault();
 
                 if (!in_array($editing, $installed)) {

@@ -309,9 +309,9 @@ namespace Textpattern\Skin {
          * {@inheritdoc}
          */
 
-        public function getEditing()
+        public function getEditing($fromDB = false)
         {
-            $editing = get_pref($this->getEvent().'_editing', '', true);
+            $editing = get_pref($this->getEvent().'_editing', '', $fromDB);
 
             if (!$editing) {
                 $installed = $this->getInstalled();
