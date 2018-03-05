@@ -530,7 +530,7 @@ namespace Textpattern\Skin {
 
                     if ($skinName) {
                         !$where or $where.= ' AND ';
-                        $where .= " AND skin = '".doSlash($skinName)."'";
+                        $where .= "skin = '".doSlash($skinName)."'";
                     }
                 }
 
@@ -569,7 +569,7 @@ namespace Textpattern\Skin {
 
                     if ($skinName) {
                         !$where or $where.= ' AND ';
-                        $where .= " AND skin = '".doSlash($skinName)."'";
+                        $where .= "skin = '".doSlash($skinName)."'";
                     }
                 }
 
