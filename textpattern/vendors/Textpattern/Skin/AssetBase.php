@@ -302,8 +302,13 @@ namespace Textpattern\Skin {
 
             $name = $this->getName();
             $extension = pathinfo($name, PATHINFO_EXTENSION);
+            $path =  $dirPath.DS.$name;
 
-            return $dirPath.DS.$name.(isset(static::$mimeTypes[$extension]) ? '' : '.'.self::getExtension());
+            if (!$extension || !method_exists($this, 'getMimeType') || !static::getMimeType($extension)) {
+                $path .=  '.'.self::getExtension();
+            }
+
+            return $path;
         }
 
         /**
@@ -366,7 +371,11 @@ namespace Textpattern\Skin {
                 $subdirField = $this->getSubdirField();
                 $name = $this->getName();
                 $extension = pathinfo($name, PATHINFO_EXTENSION);
-                $file = $name.(isset(static::$mimeTypes[$extension]) ? '' : '.'.self::getExtension());
+                $file = $name;
+
+                if (!$extension || !method_exists($this, 'getMimeType') || !static::getMimeType($extension)) {
+                    $file .= '.'.self::getExtension();
+                }
 
                 if ($subdirField) {
                     $path = $infos[$subdirField].DS.$file;
@@ -518,7 +527,13 @@ namespace Textpattern\Skin {
 
             foreach ($this->getNames() as $name) {
                 $ext = pathinfo($name, PATHINFO_EXTENSION);
-                $filenames[] = $name.(isset(static::$mimeTypes[$ext]) ? '' : '.'.$extension);
+                $filename = $name;
+
+                if (!$ext || !method_exists($this, 'getMimeType') || !static::getMimeType($ext)) {
+                    $filename .= '.'.$extension;
+                }
+
+                $filenames[] = $filename;
             }
 
             $files = $this->getFiles($filenames, $hasSubdir ? 1 : 0);
@@ -529,7 +544,10 @@ namespace Textpattern\Skin {
                 foreach ($files as $file) {
                     $name = $file->getFilename();
                     $ext = pathinfo($name, PATHINFO_EXTENSION);
-                    isset(static::$mimeTypes[$ext]) or $name = pathinfo($name, PATHINFO_FILENAME);
+
+                    if (!$ext || !method_exists($this, 'getMimeType') || !static::getMimeType($ext)) {
+                        $name = pathinfo($name, PATHINFO_FILENAME);
+                    }
 
                     $this->setName($name);
 
@@ -588,7 +606,13 @@ namespace Textpattern\Skin {
 
                     foreach ($this->getNames() as $name) {
                         $ext = pathinfo($name, PATHINFO_EXTENSION);
-                        $filenames[] = $name.(isset(static::$mimeTypes[$ext]) ? '' : '.'.$extension);
+                        $filename = $name;
+
+                        if (!$ext || !method_exists($this, 'getMimeType') || !static::getMimeType($ext)) {
+                            $filename .= '.'.$extension;
+                        }
+
+                        $filenames[] = $filename;
                     }
 
                     $files = $this->getFiles($filenames, self::getSubdirField() ? 1 : 0);

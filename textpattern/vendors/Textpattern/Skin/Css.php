@@ -43,17 +43,59 @@ namespace Textpattern\Skin {
                 'css' => '/* Contents of the css tag goes here. See https://docs.textpattern.io/tags/css */'
             ),
         );
-        protected static $mimeTypes = array(
-            'txt'  => 'text/plain',
-            'csv'  => 'text/csv',
-            'htm'  => 'text/html',
-            'html' => 'text/html',
-//            'css'  => 'text/css',
-            'js'   => 'application/javascript',
-            'json' => 'application/json',
-            'xml'  => 'application/xml',
-            'svg'  => 'image/svg+xml'
-        );
+
+        /**
+         * Asset mimetypes.
+         *
+         * @var array Associative array of 'extension' => 'mimetype'
+         */
+
+        protected static $mimeTypes;
+
+        /**
+         * $mimeTypes property setter.
+         */
+
+        protected static function setMimeTypes()
+        {
+            static::$mimeTypes = array(
+                'txt'  => 'text/plain',
+                'csv'  => 'text/csv',
+                'htm'  => 'text/html',
+                'html' => 'text/html',
+                // 'css'  => 'text/css',
+                'js'   => 'application/javascript',
+                'json' => 'application/json',
+                'xml'  => 'application/xml',
+                'svg'  => 'image/svg+xml'
+            ); // parse_ini_string(implode(n, do_list_unique(get_pref('assets_mimetypes'))));
+        }
+
+        /**
+         * $mimeTypes property getter.
+         *
+         * @return string static::$mimeTypes.
+         */
+
+        public static function getMimeTypes()
+        {
+            static::$mimeTypes or self::setMimeTypes();
+
+            return static::$mimeTypes;
+        }
+
+        /**
+         * Get a mime type from an extension, as defined in the $mimeTypes property.
+         *
+         * @return mixed Mime type of FALSE.
+         */
+
+        protected static function getMimeType($extension)
+        {
+            $mimeTypes = self::getMimeTypes();
+
+            return isset($mimeTypes[$extension]) ? $mimeTypes[$extension] : false;
+        }
 
         /**
          * {@inheritdoc}

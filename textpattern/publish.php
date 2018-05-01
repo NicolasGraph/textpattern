@@ -601,7 +601,8 @@ function output_css($s = '', $n = '', $t = '', $e = '')
 {
     static $mimetypes = null;
 
-    isset($mimetypes) or $mimetypes = Txp::get('Textpattern\Skin\Css')->getMimeTypes();
+    isset($mimetypes) or $mimetypes = \Textpattern\Skin\Css::getMimeTypes();
+
     $order = '';
     $skinquery = $t ? " AND skin='".doSlash($t)."'" : '';
 
