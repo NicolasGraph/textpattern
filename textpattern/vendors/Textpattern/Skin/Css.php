@@ -56,7 +56,7 @@ namespace Textpattern\Skin {
          * $mimeTypes property setter.
          */
 
-        protected static function setMimeTypes()
+        public static function _init()
         {
             static::$mimeTypes = array(
                 'txt'  => 'text/plain',
@@ -79,8 +79,6 @@ namespace Textpattern\Skin {
 
         public static function getMimeTypes()
         {
-            static::$mimeTypes or self::setMimeTypes();
-
             return static::$mimeTypes;
         }
 

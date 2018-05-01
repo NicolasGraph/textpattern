@@ -152,6 +152,10 @@ class Loader
             require_once $file;
 
             if (class_exists($request, false)) {
+                if (method_exists($request, '_init')) {
+                    $request::_init();
+                }
+
                 $trace->log("[Class loaded: '$class']");
                 $trace->stop();
 
