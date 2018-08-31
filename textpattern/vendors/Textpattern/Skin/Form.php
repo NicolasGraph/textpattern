@@ -30,88 +30,87 @@
  * @package Skin
  */
 
-namespace Textpattern\Skin {
+namespace Textpattern\Skin;
 
-    class Form extends AssetBase implements FormInterface
+class Form extends AssetBase implements FormInterface
+{
+    protected static $dir = 'forms';
+    protected static $subdirField = 'type';
+    protected static $subdirValues = array('article', 'category', 'comment', 'file', 'link', 'section', 'misc');
+    protected static $defaultSubdir = 'misc';
+    protected static $fileContentsField = 'Form';
+    protected static $essential = array(
+        array(
+            'name' => 'comments',
+            'type' => 'comment',
+            'Form' => '<!-- Default contents of the comments tag goes here. '
+                     .'See https://docs.textpattern.io/tags/comments. -->',
+        ),
+        array(
+            'name' => 'comments_display',
+            'type' => 'comment',
+            'Form' => '<!-- Default contents of the popup_comments tag goes here. '
+                     .'See https://docs.textpattern.io/tags/popup_comments. -->',
+        ),
+        array(
+            'name' => 'comment_form',
+            'type' => 'comment',
+            'Form' => '<!-- Default contents of the comments_form tag goes here. '
+                     .'See https://docs.textpattern.io/tags/comments_form. -->',
+        ),
+        array(
+            'name' => 'default',
+            'type' => 'article',
+            'Form' => '<!-- Default contents of the article tag goes here. '
+                     .'See https://docs.textpattern.io/tags/article. -->',
+        ),
+        array(
+            'name' => 'plainlinks',
+            'type' => 'link',
+            'Form' => '<!-- Default contents of the linklist tag goes here. '
+                     .'See https://docs.textpattern.io/tags/linklist. -->',
+        ),
+        array(
+            'name' => 'files',
+            'type' => 'file',
+            'Form' => '<!-- Default contents of the file_download tag goes here. '
+                     .'See https://docs.textpattern.io/tags/file_download. -->',
+        ),
+    );
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function setInfos(
+        $name,
+        $type = null,
+        $Form = null
+    ) {
+        $name = $this->setName($name)->getName();
+
+        $this->infos = compact('name', 'type', 'Form');
+
+        return $this;
+    }
+
+    /**
+     * $defaultSubdir property getter.
+     */
+
+    public static function getTypes()
     {
-        protected static $dir = 'forms';
-        protected static $subdirField = 'type';
-        protected static $subdirValues = array('article', 'category', 'comment', 'file', 'link', 'section', 'misc');
-        protected static $defaultSubdir = 'misc';
-        protected static $fileContentsField = 'Form';
-        protected static $essential = array(
-            array(
-                'name' => 'comments',
-                'type' => 'comment',
-                'Form' => '<!-- Default contents of the comments tag goes here. '
-                         .'See https://docs.textpattern.io/tags/comments. -->',
-            ),
-            array(
-                'name' => 'comments_display',
-                'type' => 'comment',
-                'Form' => '<!-- Default contents of the popup_comments tag goes here. '
-                         .'See https://docs.textpattern.io/tags/popup_comments. -->',
-            ),
-            array(
-                'name' => 'comment_form',
-                'type' => 'comment',
-                'Form' => '<!-- Default contents of the comments_form tag goes here. '
-                         .'See https://docs.textpattern.io/tags/comments_form. -->',
-            ),
-            array(
-                'name' => 'default',
-                'type' => 'article',
-                'Form' => '<!-- Default contents of the article tag goes here. '
-                         .'See https://docs.textpattern.io/tags/article. -->',
-            ),
-            array(
-                'name' => 'plainlinks',
-                'type' => 'link',
-                'Form' => '<!-- Default contents of the linklist tag goes here. '
-                         .'See https://docs.textpattern.io/tags/linklist. -->',
-            ),
-            array(
-                'name' => 'files',
-                'type' => 'file',
-                'Form' => '<!-- Default contents of the file_download tag goes here. '
-                         .'See https://docs.textpattern.io/tags/file_download. -->',
-            ),
-        );
+        return static::$subdirValues;
+    }
 
-        /**
-         * {@inheritdoc}
-         */
+    /**
+     * Get the skin name used by the default section.
+     *
+     * @return mixed Skin name or FALSE on error.
+     */
 
-        public function setInfos(
-            $name,
-            $type = null,
-            $Form = null
-        ) {
-            $name = $this->setName($name)->getName();
-
-            $this->infos = compact('name', 'type', 'Form');
-
-            return $this;
-        }
-
-        /**
-         * $defaultSubdir property getter.
-         */
-
-        public static function getTypes()
-        {
-            return static::$subdirValues;
-        }
-
-        /**
-         * Get the skin name used by the default section.
-         *
-         * @return mixed Skin name or FALSE on error.
-         */
-
-        protected function getDefault()
-        {
-            return 'default';
-        }
+    protected function getDefault()
+    {
+        return 'default';
     }
 }

@@ -30,34 +30,33 @@
  * @package Skin
  */
 
-namespace Textpattern\Skin {
+namespace Textpattern\Skin;
 
-    class Css extends AssetBase implements CssInterface
-    {
-        protected static $extension = 'css';
-        protected static $dir = 'styles';
-        protected static $fileContentsField = 'css';
-        protected static $essential = array(
-            array(
-                'name' => 'default',
-                'css' => '/* Contents of the css tag goes here. '
-                        .'See https://docs.textpattern.io/tags/css */'
-            ),
-        );
+class Css extends AssetBase implements CssInterface
+{
+    protected static $extension = 'css';
+    protected static $dir = 'styles';
+    protected static $fileContentsField = 'css';
+    protected static $essential = array(
+        array(
+            'name' => 'default',
+            'css' => '/* Contents of the css tag goes here. '
+                    .'See https://docs.textpattern.io/tags/css */'
+        ),
+    );
 
-        /**
-         * {@inheritdoc}
-         */
+    /**
+     * {@inheritdoc}
+     */
 
-        public function setInfos(
-            $name,
-            $css = null
-        ) {
-            $name = $this->setName($name)->getName();
+    public function setInfos(
+        $name,
+        $css = null
+    ) {
+        $name = $this->setName($name)->getName();
 
-            $this->infos = compact('name', 'css');
+        $this->infos = compact('name', 'css');
 
-            return $this;
-        }
+        return $this;
     }
 }
